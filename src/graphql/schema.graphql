@@ -1,0 +1,49 @@
+type Query {
+  ping: String!
+  messages: [Message!]
+  findUsers: [User!]
+  findPosts: [Post!]
+  findUserById: User!
+  findPostByTitle: Post!
+  findUserByToken: User!
+}
+
+type Mutation {
+  createMessage(title: String!, content: String!, author: String!): Message
+  createPost(title: String!, body:String!, tags:[String!]): Post
+  createComment(comment: String!, userID: String!, postID: String!): Comment
+  registerUser(username: String!, password: String!, email: String!, displayName: String!): User
+  login(email: String!, password: String!): String
+}
+
+type Message {
+  _id: ID!
+  title: String!
+  content: String!
+  author: String!
+}
+
+type Comment {
+  _id: ID!
+  comment: String!
+  userID: User!
+  postID: Post!
+}
+
+type User {
+    _id: ID!
+    username: String!
+    password: String!
+    email: String!
+    displayName: String
+    allPost: [Post!]
+}
+
+type Post {
+  _id: ID!
+  title: String!
+  body: String!
+  tags: [String!]!
+  authorId: String!
+  author: User!
+  }
