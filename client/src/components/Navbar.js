@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Navigation = () => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
   useEffect(() => {
     if (!token) {
+      console.log("este es el token " + token);
       const list = document.getElementById("list");
       const item = document.querySelector("#logout");
       list?.removeChild(item);
       console.log("Logged out");
-      <Navigate to={`/login`} />
     } else {
-      console.log("logged");
+      console.log("token desde navbar " + token)
     }
   }, [token]);
 
   const logout = async () => {
-    localStorage.removeItem("token"); 
+    localStorage.removeItem("token");
     setToken("");
   };
   return (
@@ -47,12 +47,13 @@ export const Navigation = () => {
               Create Message
             </Link>
           </li>
-
-          <li className="nav-item" id="logout" onClick={() => logout()}>
-            <Link className="nav-link" to="/login">
-              Logout
-            </Link>
-          </li>
+          
+             <li className="nav-item" id="logout">
+              <Link className="nav-link" to="/login" onClick={() => logout()}>
+                Logout
+              </Link>
+            </li> 
+          
         </ul>
       </div>
     </nav>

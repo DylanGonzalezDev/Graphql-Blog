@@ -16,7 +16,8 @@ export default function Login() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   if (token) {
-    navigate("/");
+     navigate("/")
+     return <p>{token}</p>
   } else {
     return (
       <div className="row">

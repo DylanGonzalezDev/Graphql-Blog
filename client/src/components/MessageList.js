@@ -1,6 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
 export const GET_MESSAGES = gql`
   {
@@ -17,11 +19,15 @@ export default function MessageList() {
   const { loading, error, data } = useQuery(GET_MESSAGES);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  if (!token) {
-    navigate("/login");
-    return <p>no token</p>
-    
+  const { users, userLoggedByToken } = useContext(UserContext);
 
+  useEffect(() => {
+    userLoggedByToken();
+    console.log("desde message list"+ users)
+  }, []);
+
+  if (!token) {
+    return navigate("/login");
   } else {
     if (loading) return <p>Loading Messages...</p>;
 
@@ -37,7 +43,7 @@ export default function MessageList() {
               <div className="card-body">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                <p>{author.username}</p>
+                <p>{users?.username}</p>
               </div>
             </div>
           ))}
